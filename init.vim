@@ -42,7 +42,9 @@ Bundle 'pangloss/vim-javascript'
 Bundle 'majutsushi/tagbar'
 Bundle 'christoomey/vim-tmux-navigator'
 " COLORSCHEME {{{2
-
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'tomasr/molokai'
+Plugin 'vim-scripts/phd'
 " }}}1
 
 " VIM BASE IDE SETTING {{{1
@@ -179,6 +181,9 @@ syntax enable
 "let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors
 set background=dark
+" colorscheme solarized
+colorscheme molokai
+" colorscheme phd
 " colorscheme nova
 " }}}
 " }}}

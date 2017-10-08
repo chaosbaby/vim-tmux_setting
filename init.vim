@@ -51,12 +51,12 @@ Plugin 'vim-scripts/phd'
 " basics {{{2
 filetype plugin indent on
 syntax on 
-set number
+set number 
 set relativenumber
-set incsearch
-set ignorecase
+set incsearch " 开启实时搜索
+set ignorecase " 搜索时大小写不敏感
 set smartcase
-set nohlsearch
+set nohlsearch "禁止显示搜索高亮
 set tabstop=4
 set softtabstop=0
 set shiftwidth=4
@@ -64,6 +64,30 @@ set expandtab
 set nobackup
 set noswapfile
 set nowrap
+
+set wildmenu " vim 自身命令行模式智能补全
+" autocmd BufWritePost ~/.config/nvim/init.vim source % " 让配置变更立即生效
+" autocmd BufWritePost $MYVIMRC source $MYVIMRC " 让配置变更立即生效
+" 让配置变更立即生效
+nmap <F4> :source ~/.config/nvim/init.vim <CR>  
+" 定义快捷键到行首和行尾
+nmap lb 0
+nmap le $
+
+" " 设置快捷键遍历子窗口
+
+" 定义快捷键在结对符之间跳转
+nmap <Leader>M %
+
+"定义快捷键关闭当前分割窗口
+nmap <Leader>q :q<CR>
+" 定义快捷键保存当前窗口内容
+nmap <Leader>w :w<CR>
+" 定义快捷键保存所有窗口内容并退出 vim
+nmap <Leader>WQ :wa<CR>:q<CR>
+" 不做任何保存，直接退出 vim
+nmap <Leader>Q :qa!<CR>
+
 
 " preferences {{{2
 inoremap jk <ESC> :w <ESC>
@@ -190,3 +214,4 @@ colorscheme molokai
 
 " jsx
 let g:jsx_ext_required = 0
+" }}}

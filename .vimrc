@@ -77,7 +77,8 @@ set expandtab
 set incsearch " 开启实时搜索
 set ignorecase " 搜索时大小写不敏感
 set smartcase
-set nohlsearch "禁止显示搜索高亮
+" set nohlsearch "禁止显示搜索高亮
+set hlsearch  "高亮搜索的关键字 
 
 " Disable stupid backup and swap files - they trigger too many events
 " for file system watchers
@@ -86,11 +87,21 @@ set nowritebackup
 set noswapfile
 
 " Useful settings
-set history=700
+set history=700 "设置命令历史行数 
 set undolevels=700
 set wildmenu " vim 自身命令行模式智能补全
 set path+=** " find path Recursively
 
+"show 
+set ruler "打开光标的行列位置显示功能 
+set ambiwidth=double "显示中文引号 
+set cursorline "行高亮 
+set cursorcolumn "列高亮，与函数列表有冲突 
+set cmdheight=2 "设置命令行的高度 
+"set shortmess=atI  "启动的时候不显示那个援助索马里å¿童的提示 
+"set novisualbell "不要闪烁 
+set list 
+set listchars=tab:>-,trail:- "显示TAB健 
 
 " autocmd BufWritePost ~/.config/nvim/init.vim source % " 让配置变更立即生效
 autocmd BufWritePost $MYVIMRC source $MYVIMRC " 让配置变更立即生效
@@ -102,8 +113,19 @@ autocmd! bufwritepost .vimrc source %
 " change spacing for language specific
 autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
 " fold
-set foldmethod=marker
-" set foldmethod=syntax
+"设置折叠模式 
+set foldcolumn=4 
+"set foldopen=all "光标遇到折叠，折叠就打开 
+"set foldclose=all "移开折叠时自动关闭折叠 
+"zf zo zc zd zr zm zR zM zn zi zN 
+"   manual  手工定义折叠 
+"   indent  更多的缩进表示更高级别的折叠 
+"   expr    用表达式来定义折叠 
+"   syntax  用语法高亮来定义折叠 
+"   diff    对没有更改的文本进行折叠 
+" set foldlevel=100
+set foldmethod=marker "依标记折叠
+
 "color
 " let base16colorspace=256  " Access colors present in 256 colorspace
 "p keys{{{2
@@ -158,8 +180,26 @@ inoremap jk <ESC> :w <ESC>
 " <F5> run file 
 nmap <F5> :!lua %<CR>
 
+"F12生成/更新tags文件 
+set tags=tags; 
+set autochdir 
+function! UpdateTagsFile() 
+    silent !ctags -R --fields=+ianS --extra=+q 
+endfunction 
+nmap <F12> :call UpdateTagsFile()<CR> 
+ 
+"Ctrl + F12删除tags文件 
+function! DeleteTagsFile() 
+    "Linux下的删除方法 
+    "silent !rm tags 
+    "Windows下的删除方法 
+    silent !del /F /Q tags 
+endfunction 
+nmap <C-F12> :call DeleteTagsFile()<CR> 
+"退出VIM之前删除tagsæ件 
+"au VimLeavePre * call DeleteTagsFile() " 
+
 " }}}1
-" 
 
 " PLUG SETTING {{{1
 " AUTOLOAD BUNDLE{{{2
@@ -202,7 +242,6 @@ set wildignore+=*/tmp,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 " " Close the documentation window when completion is done
 " autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 " " }}}
-
 " "ale {{{3
 " ale prettier-eslint
 " \   'javascript': ['prettier_eslint'],
@@ -428,5 +467,4 @@ colorscheme molokai
 " jsx
 let g:jsx_ext_required = 0
 " }}}
-
 

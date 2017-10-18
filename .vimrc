@@ -61,8 +61,8 @@ Plugin 'chriskempson/base16-vim'
 " VIM BASE IDE SETTING {{{1
 " basics {{{2
 filetype plugin indent on
-syntax on 
-set number 
+syntax on
+set number
 " set relativenumber
 set expandtab
 
@@ -78,7 +78,7 @@ set incsearch " 开启实时搜索
 set ignorecase " 搜索时大小写不敏感
 set smartcase
 " set nohlsearch "禁止显示搜索高亮
-set hlsearch  "高亮搜索的关键字 
+set hlsearch  "高亮搜索的关键字
 
 " Disable stupid backup and swap files - they trigger too many events
 " for file system watchers
@@ -87,43 +87,43 @@ set nowritebackup
 set noswapfile
 
 " Useful settings
-set history=700 "设置命令历史行数 
+set history=700 "设置命令历史行数
 set undolevels=700
 set wildmenu " vim 自身命令行模式智能补全
 set path+=** " find path Recursively
 
-"show 
-set ruler "打开光标的行列位置显示功能 
-set ambiwidth=double "显示中文引号 
-set cursorline "行高亮 
-set cursorcolumn "列高亮，与函数列表有冲突 
-set cmdheight=2 "设置命令行的高度 
-"set shortmess=atI  "启动的时候不显示那个援助索马里å¿童的提示 
-"set novisualbell "不要闪烁 
-set list 
-set listchars=tab:>-,trail:- "显示TAB健 
+"show
+set ruler "打开光标的行列位置显示功能
+set ambiwidth=double "显示中文引号
+set cursorline "行高亮
+set cursorcolumn "列高亮，与函数列表有冲突
+set cmdheight=2 "设置命令行的高度
+"set shortmess=atI  "启动的时候不显示那个援助索马里å¿童的提示
+"set novisualbell "不要闪烁
+set list
+set listchars=tab:>-,trail:- "显示TAB健
 
 " autocmd BufWritePost ~/.config/nvim/init.vim source % " 让配置变更立即生效
 autocmd BufWritePost $MYVIMRC source $MYVIMRC " 让配置变更立即生效
 " 让配置变更立即生效
-" nmap <F4> :source ~/.config/nvim/init.vim <CR>  
+" nmap <F4> :source ~/.config/nvim/init.vim <CR>
 " Automatic reloading of .vimrc
 autocmd! bufwritepost .vimrc source %
 
 " change spacing for language specific
 autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
 " fold
-"设置折叠模式 
-set foldcolumn=4 
-"set foldopen=all "光标遇到折叠，折叠就打开 
-"set foldclose=all "移开折叠时自动关闭折叠 
-"zf zo zc zd zr zm zR zM zn zi zN 
-"   manual  手工定义折叠 
-"   indent  更多的缩进表示更高级别的折叠 
-"   expr    用表达式来定义折叠 
-"   syntax  用语法高亮来定义折叠 
-"   diff    对没有更改的文本进行折叠 
-" set foldlevel=100
+"设置折叠模式
+set foldcolumn=4
+"set foldopen=all "光标遇到折叠，折叠就打开
+"set foldclose=all "移开折叠时自动关闭折叠
+"zf zo zc zd zr zm zR zM zn zi zN
+"   manual  手工定义折叠
+"   indent  更多的缩进表示更高级别的折叠
+"   expr    用表达式来定义折叠
+"   syntax  用语法高亮来定义折叠
+"   diff    对没有更改的文本进行折叠
+set foldlevel=2
 set foldmethod=marker "依标记折叠
 
 "color
@@ -177,28 +177,63 @@ nmap <Leader>Q :qa!<CR>
 
 inoremap jk <ESC> :w <ESC>
 
-" <F5> run file 
+" <F5> run file
 nmap <F5> :!lua %<CR>
 
-"F12生成/更新tags文件 
-set tags=tags; 
-set autochdir 
-function! UpdateTagsFile() 
-    silent !ctags -R --fields=+ianS --extra=+q 
-endfunction 
-nmap <F12> :call UpdateTagsFile()<CR> 
- 
-"Ctrl + F12删除tags文件 
-function! DeleteTagsFile() 
-    "Linux下的删除方法 
-    "silent !rm tags 
-    "Windows下的删除方法 
-    silent !del /F /Q tags 
-endfunction 
-nmap <C-F12> :call DeleteTagsFile()<CR> 
-"退出VIM之前删除tagsæ件 
-"au VimLeavePre * call DeleteTagsFile() " 
+"F12生成/更新tags文件
+set tags=tags;
+set autochdir
+function! UpdateTagsFile()
+    silent !ctags -R --fields=+ianS --extra=+q
+endfunction
+nmap <F12> :call UpdateTagsFile()<CR>
 
+"Ctrl + F12删除tags文件
+function! DeleteTagsFile()
+    "Linux下的删除方法
+    "silent !rm tags
+    "Windows下的删除方法
+    silent !del /F /Q tags
+endfunction
+nmap <C-F12> :call DeleteTagsFile()<CR>
+"退出VIM之前删除tagsæ件
+"au VimLeavePre * call DeleteTagsFile() "
+
+"F2处理行尾的空格以及文件尾部的多余空行
+"Automatically remove trailing spaces when saving a file.
+autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
+"Remove indenting on empty line
+map <F1> :w<CR>:call CleanupBuffer(1)<CR>:noh<CR>
+function! CleanupBuffer(keep)
+    " Skip binary files
+    if (&bin > 0)
+        return
+    endif
+    " Remove spaces and tabs from end of every line, if possible
+    silent! %s/\s\+$//ge
+    " Save current line number
+    let lnum = line(".")
+    " number of last line
+    let lastline = line("$")
+    let n        = lastline
+    " while loop
+    while (1)
+        " content of last line
+        let line = getline(n)
+        " remove spaces and tab
+        if (!empty(line))
+            break
+        endif
+        let n = n - 1
+    endwhile
+    " Delete all empty lines at the end of file
+    let start = n+1+a:keep
+    if (start < lastline)
+        execute n+1+a:keep . "," . lastline . "d"
+    endif
+    " after clean spaces and tabs, jump back
+    exec "normal " . lnum . "G"
+endfunction
 " }}}1
 
 " PLUG SETTING {{{1
@@ -285,33 +320,33 @@ autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
 " }}}
 "" Bundle 'valloric/youcompleteme'{{{3
-"设置error和warning的提示符，如果没有设置，ycm会以syntastic的  
-" g:syntastic_warning_symbol 和 g:syntastic_error_symbol 这两个为准  
-let g:ycm_error_symbol='>>'  
-let g:ycm_warning_symbol='>*'  
-"设置跳转的快捷键，可以跳转到definition和declaration  
-nnoremap <leader>gc :YcmCompleter GoToDeclaration<CR>  
-nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>  
-nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>  
-"nmap <F4> :YcmDiags<CR>  
-"设置全局配置文件的路径  
-let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'  
-"开启基于tag的补全，可以在这之后添加需要的标签路径  
-let g:ycm_collect_identifiers_from_tags_files = 1  
-"开启语义补全  
-let g:ycm_seed_identifiers_with_syntax = 1  
-"在接受补全后不分裂出一个窗口显示接受的项  
-set completeopt-=preview  
-"不显示开启vim时检查ycm_extra_conf文件的信息  
-let g:ycm_confirm_extra_conf=0  
-"每次重新生成匹配项，禁止缓存匹配项  
-" let g:ycm_cache_omnifunc=0  
-"在注释中也可以补全  
-let g:ycm_complete_in_comments=1  
-"输入第一个字符就开始补全  
-let g:ycm_min_num_of_chars_for_completion=1  
-"不查询ultisnips提供的代码模板补全，如果需要，设置成1即可  
-let g:ycm_use_ultisnips_completer=0  
+"设置error和warning的提示符，如果没有设置，ycm会以syntastic的
+" g:syntastic_warning_symbol 和 g:syntastic_error_symbol 这两个为准
+let g:ycm_error_symbol='>>'
+let g:ycm_warning_symbol='>*'
+"设置跳转的快捷键，可以跳转到definition和declaration
+nnoremap <leader>gc :YcmCompleter GoToDeclaration<CR>
+nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
+nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+"nmap <F4> :YcmDiags<CR>
+"设置全局配置文件的路径
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+"开启基于tag的补全，可以在这之后添加需要的标签路径
+let g:ycm_collect_identifiers_from_tags_files = 1
+"开启语义补全
+let g:ycm_seed_identifiers_with_syntax = 1
+"在接受补全后不分裂出一个窗口显示接受的项
+set completeopt-=preview
+"不显示开启vim时检查ycm_extra_conf文件的信息
+let g:ycm_confirm_extra_conf=0
+"每次重新生成匹配项，禁止缓存匹配项
+" let g:ycm_cache_omnifunc=0
+"在注释中也可以补全
+let g:ycm_complete_in_comments=1
+"输入第一个字符就开始补全
+let g:ycm_min_num_of_chars_for_completion=1
+"不查询ultisnips提供的代码模板补全，如果需要，设置成1即可
+let g:ycm_use_ultisnips_completer=0
 
 "set completeopt=longest,menu	"让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
 "autocmd InsertLeave * if pumvisible() == 0|pclose|endif	"离开插入模式后自动关闭预览窗口
@@ -329,9 +364,9 @@ let g:ycm_use_ultisnips_completer=0
 "inoremap <leader><leader> <C-x><C-o>
 
 "let g:ycm_global_ycm_extra_conf = '~/.vim/data/ycm/.ycm_extra_conf.py'
-"" 不显示开启vim时检查ycm_extra_conf文件的信息  
+"" 不显示开启vim时检查ycm_extra_conf文件的信息
 "let g:ycm_confirm_extra_conf=0
-"" 开启基于tag的补全，可以在这之后添加需要的标签路径  
+"" 开启基于tag的补全，可以在这之后添加需要的标签路径
 "let g:ycm_collect_identifiers_from_tags_files=1
 ""注释和字符串中的文字也会被收入补全
 "let g:ycm_collect_identifiers_from_comments_and_strings = 0
@@ -340,7 +375,7 @@ let g:ycm_use_ultisnips_completer=0
 "" 禁止缓存匹配项,每次都重新生成匹配项
 "let g:ycm_cache_omnifunc=0
 "" 开启语义补全
-"let g:ycm_seed_identifiers_with_syntax=1	
+"let g:ycm_seed_identifiers_with_syntax=1
 ""在注释输入中也能补全
 "let g:ycm_complete_in_comments = 1
 ""在字符串输入中也能补全
@@ -377,7 +412,7 @@ let g:ycm_use_ultisnips_completer=0
 "" 寻找全局配置文件
 "let g:ycm_global_ycm_extra_conf ='~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
 "" 禁ç¨syntastic来对python检查
-"let g:syntastic_ignore_files=[".*\.py$"]                                                                                 
+"let g:syntastic_ignore_files=[".*\.py$"]
 "" 使用ctags生成的tags文件
 "let g:ycm_collect_identifiers_from_tag_files = 1
 "" 开启语义补全

@@ -46,6 +46,7 @@ Bundle 'honza/vim-snippets'
 Bundle 'valloric/youcompleteme'
 
 Bundle 'tpope/vim-markdown'
+Plugin 'SirVer/ultisnips'
 " TYPESCRIPT {{{2
 Bundle 'pangloss/vim-javascript'
 " IDE TOOL {{{2
@@ -94,7 +95,7 @@ set path+=** " find path Recursively
 
 "show
 set ruler "打开光标的行列位置显示功能
-set ambiwidth=double "显示中文引号
+" set ambiwidth=double "显示中文引号
 set cursorline "行高亮
 set cursorcolumn "列高亮，与函数列表有冲突
 set cmdheight=2 "设置命令行的高度
@@ -104,17 +105,17 @@ set list
 set listchars=tab:>-,trail:- "显示TAB健
 
 " autocmd BufWritePost ~/.config/nvim/init.vim source % " 让配置变更立即生效
-autocmd BufWritePost $MYVIMRC source $MYVIMRC " 让配置变更立即生效
+" autocmd BufWritePost $MYVIMRC source $MYVIMRC " 让配置变更立即生效
 " 让配置变更立即生效
 " nmap <F4> :source ~/.config/nvim/init.vim <CR>
 " Automatic reloading of .vimrc
-autocmd! bufwritepost .vimrc source %
+" autocmd! bufwritepost .vimrc source %
 
 " change spacing for language specific
 autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
 " fold
 "设置折叠模式
-set foldcolumn=4
+set foldcolumn=3
 "set foldopen=all "光标遇到折叠，折叠就打开
 "set foldclose=all "移开折叠时自动关闭折叠
 "zf zo zc zd zr zm zR zM zn zi zN
@@ -123,7 +124,7 @@ set foldcolumn=4
 "   expr    用表达式来定义折叠
 "   syntax  用语法高亮来定义折叠
 "   diff    对没有更改的文本进行折叠
-set foldlevel=2
+" set foldlevel=2
 set foldmethod=marker "依标记折叠
 
 "color
@@ -319,68 +320,14 @@ autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 " Bundle 'honza/vim-snippets' {{{3
 
 " }}}
-"" Bundle 'valloric/youcompleteme'{{{3
-"设置error和warning的提示符，如果没有设置，ycm会以syntastic的
-" g:syntastic_warning_symbol 和 g:syntastic_error_symbol 这两个为准
-let g:ycm_error_symbol='>>'
-let g:ycm_warning_symbol='>*'
-"设置跳转的快捷键，可以跳转到definition和declaration
-nnoremap <leader>gc :YcmCompleter GoToDeclaration<CR>
-nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
-nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
-"nmap <F4> :YcmDiags<CR>
-"设置全局配置文件的路径
-let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
-"开启基于tag的补全，可以在这之后添加需要的标签路径
-let g:ycm_collect_identifiers_from_tags_files = 1
-"开启语义补全
-let g:ycm_seed_identifiers_with_syntax = 1
-"在接受补全后不分裂出一个窗口显示接受的项
-set completeopt-=preview
-"不显示开启vim时检查ycm_extra_conf文件的信息
-let g:ycm_confirm_extra_conf=0
-"每次重新生成匹配项，禁止缓存匹配项
-" let g:ycm_cache_omnifunc=0
-"在注释中也可以补全
-let g:ycm_complete_in_comments=1
-"输入第一个字符就开始补全
-let g:ycm_min_num_of_chars_for_completion=1
-"不查询ultisnips提供的代码模板补全，如果需要，设置成1即可
-let g:ycm_use_ultisnips_completer=0
-
-"set completeopt=longest,menu	"让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
-"autocmd InsertLeave * if pumvisible() == 0|pclose|endif	"离开插入模式后自动关闭预览窗口
-"inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"	"回车即选中当前项
-""上下左右键ç行为 会显示其他信息
-"inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
-"inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-"inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
-"inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
-"" 跳转到定义处
-"nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-"nnoremap <F6> :YcmForceCompileAndDiagnostics<CR>	"force recomile with syntastic
-"" nnoremap <leader>lo :lopen<CR>	"open locationlist
-"" nnoremap <leader>lc :lclose<CR>	"close locationlist
-"inoremap <leader><leader> <C-x><C-o>
-
-"let g:ycm_global_ycm_extra_conf = '~/.vim/data/ycm/.ycm_extra_conf.py'
-"" 不显示开启vim时检查ycm_extra_conf文件的信息
-"let g:ycm_confirm_extra_conf=0
-"" 开启基于tag的补全，可以在这之后添加需要的标签路径
-"let g:ycm_collect_identifiers_from_tags_files=1
-""注释和字符串中的文字也会被收入补全
-"let g:ycm_collect_identifiers_from_comments_and_strings = 0
-"" 输入第2个字符开始补全
-"let g:ycm_min_num_of_chars_for_completion=2
-"" 禁止缓存匹配项,每次都重新生成匹配项
-"let g:ycm_cache_omnifunc=0
-"" 开启语义补全
-"let g:ycm_seed_identifiers_with_syntax=1
-""在注释输入中也能补全
-"let g:ycm_complete_in_comments = 1
-""在字符串输入中也能补全
-"let g:ycm_complete_in_strings = 1
-"" 设置在下面几种格式的文件上屏蔽ycm
+" Bundle 'SirVer/ultisnips' {{{3
+let g:UltiSnipsSnippetDirectories=['UltiSnips']
+" let g:UltiSnipsSnippetsDir = '~/.vim/UltiSnips'
+let g:UltiSnipsExpandTrigger = '<Tab>'
+let g:UltiSnipsListSnippets = '<C-Tab>'
+let g:UltiSnipsJumpForwardTrigger = '<Tab>'
+let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
+" }}}
 "let g:ycm_filetype_blacklist = {
 "      \ 'tagbar' : 1,
 "      \ 'nerdtree' : 1,
@@ -409,71 +356,71 @@ let g:ycm_use_ultisnips_completer=0
 
 
 
-"" 寻找全局配置文件
-"let g:ycm_global_ycm_extra_conf ='~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
-"" 禁ç¨syntastic来对python检查
-"let g:syntastic_ignore_files=[".*\.py$"]
-"" 使用ctags生成的tags文件
-"let g:ycm_collect_identifiers_from_tag_files = 1
-"" 开启语义补全
-"" 修改对C语言的补全快捷键，默认是CTRL+space，修改为ALT+;未测出效果
-"let g:ycm_key_invoke_completion = '<M-;>'
-"" 设置转到定义处的快捷键为ALT+G，未测出效果
-"nmap <M-g> :YcmCompleter GoToDefinitionElseDeclaration<C-R>=expand("<cword>")<CR><CR>
-""关键字补全
-"let g:ycm_seed_identifiers_with_syntax = 1
-"" 在接受补全后不分裂出一个窗口显示接受的项
-"set completeopt-=preview
-"" 让补全行为与一般的IDE一致
-"set completeopt=longest,menu
-"" 不显示开启vim时检查ycm_extra_conf文件的信息
-"let g:ycm_confirm_extra_conf=0
-"" 每次重新生成匹配项，禁止缓存匹配项
-"let g:ycm_cache_omnifunc=0
-"" 在注释中也可以补全
-"let g:ycm_complete_in_comments=1
-"" 输入第一个字符就开始补全
-"let g:ycm_min_num_of_chars_for_completion=1
-"" 错误标识符
-"let g:ycm_error_symbol='>>'
-"" 警告标识符
-"let g:ycm_warning_symbol='>*'
-"" 不查询ultisnips提供的代码模板补全，如果需要，设置成1即可
-"let g:ycm_use_ultisnips_completer=1
+" 寻找全局配置文件
+let g:ycm_global_ycm_extra_conf ='~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+" 禁ç¨syntastic来对python检查
+let g:syntastic_ignore_files=[".*\.py$"]
+" 使用ctags生成的tags文件
+let g:ycm_collect_identifiers_from_tag_files = 1
+" 开启语义补全
+" 修改对C语言的补全快捷键，默认是CTRL+space，修改为ALT+;未测出效果
+let g:ycm_key_invoke_completion = '<M-;>'
+" 设置转到定义处的快捷键为ALT+G，未测出效果
+nmap <M-g> :YcmCompleter GoToDefinitionElseDeclaration<C-R>=expand("<cword>")<CR><CR>
+"关键字补全
+let g:ycm_seed_identifiers_with_syntax = 1
+" 在接受补全后不分裂出一个窗口显示接受的项
+set completeopt-=preview
+" 让补全行为与一般的IDE一致
+set completeopt=longest,menu
+" 不显示开启vim时检查ycm_extra_conf文件的信息
+let g:ycm_confirm_extra_conf=0
+" 每次重新生成匹配项，禁止缓存匹配项
+let g:ycm_cache_omnifunc=0
+" 在注释中也可以补全
+let g:ycm_complete_in_comments=1
+" 输入第一个字符就开始补全
+let g:ycm_min_num_of_chars_for_completion=1
+" 错误标识符
+let g:ycm_error_symbol='>>'
+" 警告标识符
+let g:ycm_warning_symbol='>*'
+" 不查询ultisnips提供的代码模板补全，如果需要，设置成1即可
+let g:ycm_use_ultisnips_completer=1
 
-"let &termencoding=&encoding
-"set fileencodings=utf-8,gbk,ucs-bom,cp936
+let &termencoding=&encoding
+set fileencodings=utf-8,gbk,ucs-bom,cp936
 
-"" 自动补全配置
-"set completeopt=longest,menu "让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
-"autocmd InsertLeave * if pumvisible() == 0|pclose|endif "离开插入模式后自动关闭预览窗口
-"inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"    "回车即选中当前项
-""上下左右键的行为 会显示其他信息
-"inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
-"inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-"inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
-"inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
+" 自动补全配置
+set completeopt=longest,menu "让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif "离开插入模式后自动关闭预览窗口
+inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"    "回车即选中当前项
+"上下左右键的行为 会显示其他信息
+inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
+inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
+inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
+inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
-"" youcompleteme  默认tab  s-tab 和自动补全冲突
-""let g:ycm_key_list_select_completion=['<c-n>']
-"let g:ycm_key_list_select_completion = ['<Down>']
-""let g:ycm_key_list_previous_completion=['<c-p>']
-"let g:ycm_key_list_previous_completion = ['<Up>']
-"let g:ycm_confirm_extra_conf=0 "关闭加载.ycm_extra_conf.py提示
+" youcompleteme  默认tab  s-tab 和自动补全冲突
+"let g:ycm_key_list_select_completion=['<c-n>']
+let g:ycm_key_list_select_completion = ['<Down>']
+"let g:ycm_key_list_previous_completion=['<c-p>']
+let g:ycm_key_list_previous_completion = ['<Up>']
+let g:ycm_confirm_extra_conf=0 "关闭加载.ycm_extra_conf.py提示
 
-"let g:ycm_collect_identifiers_from_tags_files=1 " 开启 YCM 基于标签引擎
-"let g:ycm_cache_omnifunc=0  " 禁止缓存匹配项,每次都重新生成匹配项
-"let g:ycm_seed_identifiers_with_syntax=1    " 语法关键字补全
-"nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>    "force recomile with syntastic
-""nnoremap <leader>lo :lopen<CR> "open locationlist
-""nnoremap <leader>lc :lclose<CR>    "close locationlist
-"inoremap <leader><leader> <C-x><C-o>
-""在注释输入中也能补全
-"let g:ycm_complete_in_comments = 1
-""在字符串输入中也能补全
-"let g:ycm_complete_in_strings = 1
-""注释和字符串中的文字也会被收入补全
-"let g:ycm_collect_identifiers_from_comments_and_strings = 0
+let g:ycm_collect_identifiers_from_tags_files=1 " 开启 YCM 基于标签引擎
+let g:ycm_cache_omnifunc=0  " 禁止缓存匹配项,每次都重新生成匹配项
+let g:ycm_seed_identifiers_with_syntax=1    " 语法关键字补全
+nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>    "force recomile with syntastic
+"nnoremap <leader>lo :lopen<CR> "open locationlist
+"nnoremap <leader>lc :lclose<CR>    "close locationlist
+inoremap <leader><leader> <C-x><C-o>
+"在注释输入中也能补全
+let g:ycm_complete_in_comments = 1
+"在字符串输入中也能补全
+let g:ycm_complete_in_strings = 1
+"注释和字符串中的文字也会被收入补全
+let g:ycm_collect_identifiers_from_comments_and_strings = 0
 
 " 跳转到定义处
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>

@@ -47,6 +47,8 @@ Bundle 'valloric/youcompleteme'
 
 Bundle 'tpope/vim-markdown'
 Plugin 'SirVer/ultisnips'
+
+" Plugin 'ervandew/supertab'
 " TYPESCRIPT {{{2
 Bundle 'pangloss/vim-javascript'
 " IDE TOOL {{{2
@@ -129,6 +131,7 @@ set foldmethod=marker "依标记折叠
 
 "color
 " let base16colorspace=256  " Access colors present in 256 colorspace
+" set term=screen
 "p keys{{{2
 let mapleader = ","
 " setfolder kay
@@ -278,6 +281,7 @@ set wildignore+=*/tmp,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 " " Close the documentation window when completion is done
 " autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 " " }}}
+
 " "ale {{{3
 " ale prettier-eslint
 " \   'javascript': ['prettier_eslint'],
@@ -314,20 +318,32 @@ nmap zn <Plug>(ale_next_wrap)
 " ""<Leader>d查看错误或警告的详细信息
 " nmap <Leader>d :ALEDetail<CR>
 " }}}
+
 " Bundle 'honza/vim-snippets' {{{3
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 " }}}
-" Bundle 'honza/vim-snippets' {{{3
 
-" }}}
 " Bundle 'SirVer/ultisnips' {{{3
 let g:UltiSnipsSnippetDirectories=['UltiSnips']
-" let g:UltiSnipsSnippetsDir = '~/.vim/UltiSnips'
+let g:UltiSnipsSnippetsDir = '~/.vim/UltiSnips'
 let g:UltiSnipsExpandTrigger = '<Tab>'
 let g:UltiSnipsListSnippets = '<C-Tab>'
 let g:UltiSnipsJumpForwardTrigger = '<Tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
+let g:UltiSnipsEditSplit="vertical"
 " }}}
+
+" " Bundle 'SirVer/ultisnips' {{{3
+" let g:UltiSnipsSnippetDirectories=['UltiSnips']
+" let g:UltiSnipsSnippetsDir = '~/.vim/UltiSnips'
+" let g:UltiSnipsExpandTrigger = '<c-u>'
+" " let g:UltiSnipsListSnippets = '<c-j>'
+" let g:UltiSnipsJumpForwardTrigger = '<c-u>'
+" let g:UltiSnipsJumpBackwardTrigger = '<c-i>'
+" let g:UltiSnipsEditSplit="vertical"
+" " }}}
+
+" Bundle  'valloric/youcompleteme' {{{3 "
 "let g:ycm_filetype_blacklist = {
 "      \ 'tagbar' : 1,
 "      \ 'nerdtree' : 1,
@@ -338,15 +354,6 @@ let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
 "" 修改对C函数的补全快捷键，默认是CTRL + space，修改为ALT + ;
 "let g:ycm_key_invoke_completion = '<M-;>'
 
-"" SirVer/ultisnips 代码片断
-"" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-"" let g:UltiSnipsExpandTrigger="<tab>"
-"" let g:UltiSnipsJumpForwardTrigger="<tab>"
-"" let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-"" let g:UltiSnipsListSnippets="<c-e>"
-""定义存放代码片段的文件夹，使用自定义和默认的，将会的到全局，有冲突的会提示
-"let g:UltiSnipsSnippetDirectories=["bundle/vim-snippets/UltiSnips"]
-
 "" 参考https://github.com/Valloric/YouCompleteMe/issues/36#issuecomment-62941322
 "" 解决ultisnips和ycm tab冲突，如果不使用下面的办法解决可以参考
 "" https://github.com/Valloric/YouCompleteMe/issues/36#issuecomment-63205056的配置
@@ -356,6 +363,10 @@ let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
 
 
 
+let g:ycm_filetype_blacklist = {
+      \ 'tagbar' : 1,
+      \ 'nerdtree' : 1,
+      \}
 " 寻找全局配置文件
 let g:ycm_global_ycm_extra_conf ='~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
 " 禁ç¨syntastic来对python检查
@@ -425,8 +436,11 @@ let g:ycm_collect_identifiers_from_comments_and_strings = 1
 
 " 跳转到定义处
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" }}}
+
 "" }}}
 " }}}
+
 " TYPESCRIPT {{{2
 " }}}
 " IDE TOOL {{{2

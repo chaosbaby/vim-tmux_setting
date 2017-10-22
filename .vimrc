@@ -107,7 +107,7 @@ set list
 set listchars=tab:>-,trail:- "显示TAB健
 
 " autocmd BufWritePost ~/.config/nvim/init.vim source % " 让配置变更立即生效
-" autocmd BufWritePost $MYVIMRC source $MYVIMRC " 让配置变更立即生效
+autocmd BufWritePost $MYVIMRC source $MYVIMRC " 让配置变更立即生效
 " 让配置变更立即生效
 " nmap <F4> :source ~/.config/nvim/init.vim <CR>
 " Automatic reloading of .vimrc
@@ -130,7 +130,14 @@ set foldcolumn=3
 set foldmethod=marker "依标记折叠
 
 "color
-" let base16colorspace=256  " Access colors present in 256 colorspace
+let base16colorspace=256  " Access colors present in 256 colorspace
+" set term=screen-256color
+if &term =~ '256color'
+  " disable Background Color Erase (BCE) so that color schemes
+  " render properly when inside 256-color tmux and GNU screen.
+  " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+  set t_ut=
+endif
 " set term=screen
 "p keys{{{2
 let mapleader = ","
@@ -464,4 +471,11 @@ colorscheme molokai
 " jsx
 let g:jsx_ext_required = 0
 " }}}
-
+set nocompatible
+set encoding=utf-8
+set laststatus=2
+let g:Powerline_symbols = 'fancy'
+set t_Co=256
+syntax enable
+set background=dark
+let g:solarized_termtrans = 1

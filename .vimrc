@@ -107,7 +107,7 @@ set list
 set listchars=tab:>-,trail:- "显示TAB健
 
 " autocmd BufWritePost ~/.config/nvim/init.vim source % " 让配置变更立即生效
-autocmd BufWritePost $MYVIMRC source $MYVIMRC " 让配置变更立即生效
+" autocmd BufWritePost $MYVIMRC source $MYVIMRC " 让配置变更立即生效
 " 让配置变更立即生效
 " nmap <F4> :source ~/.config/nvim/init.vim <CR>
 " Automatic reloading of .vimrc
@@ -327,18 +327,41 @@ endif
 " " }}}
 
 " "ale {{{3
-" ale prettier-eslint
+
+" let g:ale prettier-eslint ={
 " \   'javascript': ['prettier_eslint'],
 " \    'lua': ['luacheck'],
-" \    'python': ['autopep8'],
+" \    'python': ['flake8'],
 " \}
-let g:ale_fix_on_save = 1
-let g:ale_completion_enabled = 1
-let g:ale_linters = {
-            \   'javascript': ['prettier_eslint'],
-            \    'lua': ['luacheck'],
-            \    'python': ['flake8'],
+
+
+            " \   'javascript': ['prettier_eslint'],
+            " \    'lua': ['luacheck'],
+" let g:ale_linters = {
+"             \    'python': ['autopep8'],
+"             \}
+
+let g:ale_fixers = {
+            \   'javascript': ['eslint'],
+            \   'python': ['autopep8'],
             \}
+
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+
+" let g:ale_fix_on_save = 1
+let g:ale_completion_enabled = 1
+
+
+" nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+" nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
+" let g:ale_linters = {
+"             \   'javascript': ['prettier_eslint'],
+"             \    'lua': ['luacheck'],
+"             \    'python': ['flake8'],
+"             \}
+
 "let g:ale_javascript_prettier_eslint_executable = 'prettier-eslint'
 "let g:ale_javascript_prettier_eslint_use_global = 1
 

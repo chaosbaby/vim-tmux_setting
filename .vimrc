@@ -274,6 +274,43 @@ let g:nerdtree_tabs_focus_on_files=1
 let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
 set wildignore+=*/tmp,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 " 3}}}
+
+" Bundle 'kien/ctrlp.vim {{{ "
+"<Leader>p搜索当前目录下文件
+" let g:ctrlp_map = '<Leader>p'
+let g:ctrlp_cmd = 'CtrlP'
+"<Leader>f搜索MRU文件
+nmap <Leader>f :CtrlPMRUFiles<CR>
+"<Leader>b显示ç¼冲区文件，并可通过序号进行跳转
+nmap <Leader>b :CtrlPBuffer<CR>
+"设置搜索时忽略的文件
+let g:ctrlp_custom_ignore = {
+    \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
+    \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc)$',
+    \ }
+let g:ctrlp_working_path_mode = 0
+let g:ctrlp_match_window_bottom = 1
+"修改QuickFix窗口显示的最大条目数
+let g:ctrlp_max_height = 15
+let g:ctrlp_match_window_reversed = 0
+"设置MRU最大条目数为500
+let g:ctrlp_mruf_max = 500
+let g:ctrlp_follow_symlinks = 1
+"默认使用全路径搜索，置1后按文件名搜索，准确率会有所提高，可以用<C-d>进行切换
+let g:ctrlp_by_filename = 1
+"默认不使用正则表达式，置1改为默认使用正则表达式，可以用<C-r>进行切换
+let g:ctrlp_regexp = 0
+"自定义搜索列表的提示符
+let g:ctrlp_line_prefix = ' '
+
+"调用ag进行搜索提升速度，同时不使用缓存文件
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_use_caching = 0
+endif
+" }}} Bundle 'kien/ctrlp.vim "
+
 " }}}
 " GITHelper {{{2
 " }}}

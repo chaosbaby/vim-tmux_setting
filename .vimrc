@@ -139,6 +139,7 @@ if &term =~ '256color'
   set t_ut=
 endif
 " set term=screen
+
 "p keys{{{2
 let mapleader = ","
 " setfolder kay
@@ -187,9 +188,6 @@ nmap <Leader>WQ :wa<CR>:q<CR>
 nmap <Leader>Q :qa!<CR>
 
 inoremap jk <ESC> :w <ESC>
-
-" <F5> run file
-nmap <F5> :!lua %<CR>
 
 "F12生成/更新tags文件
 set tags=tags;
@@ -245,6 +243,56 @@ function! CleanupBuffer(keep)
     " after clean spaces and tabs, jump back
     exec "normal " . lnum . "G"
 endfunction
+" }}}
+
+" self made function {{{ "
+
+" run the file
+map <F5> <Esc>:w <CR> :call CompileRunGcc() <CR>:!date <CR>
+func! CompileRunGcc()
+    exec "w"
+    if &filetype == 'c'
+        exec "!g++ % -o %<"
+        exec "!time ./%<"
+    elseif &filetype == 'cpp'
+        exec "!g++ % -o /tmp/a.out"
+        exec "!time /tmp/a.out"
+    elseif &filetype == 'lua'
+        exec "!lua %"
+        exec "!time go run %"
+    elseif &filetype == 'java'
+        exec "!javac %"
+        exec "!time java %<"
+    elseif &filetype == 'sh'
+        :!time bash %
+    elseif &filetype == 'python'
+        exec "!time python2 %"
+    elseif &filetype == 'html'
+        exec "!firefox % &"
+    elseif &filetype == 'go'
+        exec "!go build %<"
+        exec "!time go run %"
+    elseif &filetype == 'mkd'
+        exec "!~/.vim/markdown.pl % > %.html &"
+        exec "!firefox %.html &"
+    endif
+endfunc
+
+nnoremap <F6>   <Esc>:w<CR>:!g++ -std=c++11 % -o /tmp/a.out && time /tmp/a.out && date<CR>
+
+map <F8> :call Rungdb()<CR>
+
+func! Rungdb()
+
+    exec "w"
+
+    exec "!g++ % -g -o %<"
+
+    exec "!gdb ./%<"
+
+endfunction
+" }}} self made function "
+
 " }}}1
 
 " PLUG SETTING {{{1
@@ -350,7 +398,7 @@ let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
 
 " let g:ale_fix_on_save = 1
-let g:ale_completion_enabled = 1
+" let g:ale_completion_enabled = 1
 
 
 " nmap <silent> <C-k> <Plug>(ale_previous_wrap)
@@ -435,7 +483,9 @@ let g:ycm_filetype_blacklist = {
       \ 'nerdtree' : 1,
       \}
 " 寻找全局配置文件
-let g:ycm_global_ycm_extra_conf ='~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+" let g:ycm_global_ycm_extra_conf ='~/.vim/bundle/youcompleteme/cpp/ycm/.ycm_extra_conf.py'
+" let g:ycm_global_ycm_extra_conf ='~/.vim/bundle/youcompleteme/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf ='~/.ycm_extra_conf.py'
 " 禁ç¨syntastic来对python检查
 let g:syntastic_ignore_files=[".*\.py$"]
 " 使用ctags生成的tags文件
@@ -521,8 +571,8 @@ syntax enable
 " set termguicolors "only for neovim
 " set background=dark
 " colorscheme solarized
-colorscheme molokai
-" colorscheme base16-solarized-light
+" colorscheme molokai
+" colorscheme base16-solarized-dark
 " colorscheme phd
 " colorscheme nova
 " }}}
@@ -535,7 +585,15 @@ set nocompatible
 set encoding=utf-8
 set laststatus=2
 let g:Powerline_symbols = 'fancy'
-set t_Co=256
 syntax enable
-set background=dark
+" colorscheme base16-monokai
+set background=light
+set t_Co=256
+hi Normal ctermfg=grey
+" hi Normal ctermbg=black
 let g:solarized_termtrans = 1
+
+if &term =~ '256color'
+  set t_ut=
+endif
+colorscheme molokai

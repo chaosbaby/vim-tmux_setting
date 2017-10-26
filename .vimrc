@@ -189,24 +189,24 @@ nmap <Leader>Q :qa!<CR>
 
 inoremap jk <ESC> :w <ESC>
 
-"F12生成/更新tags文件
-set tags=tags;
-set autochdir
-function! UpdateTagsFile()
-    silent !ctags -R --fields=+ianS --extra=+q
-endfunction
-nmap <F12> :call UpdateTagsFile()<CR>
+""F12生成/更新tags文件
+"set tags=tags;
+"set autochdir
+"function! UpdateTagsFile()
+"    silent !ctags -R --fields=+ianS --extra=+q
+"endfunction
+"nmap <F12> :call UpdateTagsFile()<CR>
 
-"Ctrl + F12删除tags文件
-function! DeleteTagsFile()
-    "Linux下的删除方法
-    "silent !rm tags
-    "Windows下的删除方法
-    silent !del /F /Q tags
-endfunction
-nmap <C-F12> :call DeleteTagsFile()<CR>
-"退出VIM之前删除tagsæ件
-"au VimLeavePre * call DeleteTagsFile() "
+""Ctrl + F12删除tags文件
+"function! DeleteTagsFile()
+"    "Linux下的删除方法
+"    "silent !rm tags
+"    "Windows下的删除方法
+"    silent !del /F /Q tags
+"endfunction
+"nmap <C-F12> :call DeleteTagsFile()<CR>
+""退出VIM之前删除tagsæ件
+""au VimLeavePre * call DeleteTagsFile() "
 
 "F2处理行尾的空格以及文件尾部的多余空行
 "Automatically remove trailing spaces when saving a file.

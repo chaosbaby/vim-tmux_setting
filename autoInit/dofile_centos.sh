@@ -7,7 +7,6 @@ sudo yum update -y
 sudo yum install centos-release-scl -y
 sudo yum install devtoolset-3-toolchain -y
 sudo yum install gcc-c++ -y
-sudo scl enable devtoolset-3 bash
 
 sudo yum install -y ruby ruby-devel lua lua-devel luajit \
 luajit-devel ctags git python python-devel \
@@ -16,7 +15,7 @@ perl perl-devel perl-ExtUtils-ParseXS \
 perl-ExtUtils-XSpp perl-ExtUtils-CBuilder \
 perl-ExtUtils-Embed libX11-devel
 yum -y install cmake
-yum install ncurses-devel
+yum -y install ncurses-devel
 
 git clone https://github.com/chaosbaby/vim-tmux_setting.git /root/dofile
 # vim 8 {{{ #
@@ -44,9 +43,9 @@ git clone https://github.com/gmarik/vundle.git
 # }}} vundle #
 
 # youcompleteme {{{ #
-ln /root/dofile/vimDoFile/ubuntu.ycm_extra_conf.py /root/.ycm_extra_conf.py
-cd ~/.vim/bundle/youcompleteme
-./install.py --clang-completer
+# ln /root/dofile/vimDoFile/ubuntu.ycm_extra_conf.py /root/.ycm_extra_conf.py
+# cd ~/.vim/bundle/youcompleteme
+# ./install.py --clang-completer
 # }}} youcompleteme #
 
 # }}} vim 8 #
@@ -56,7 +55,7 @@ cd ~/.vim/bundle/youcompleteme
 
 
 # tmux setting
-sudo yum install tmux
+sudo yum -y install tmux
 ln /root/dofile/tmux.conf /root/.tmux.conf
 
 
@@ -68,5 +67,6 @@ git config --global credential.helper store
 #shell color
 git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell
 
-ln -sf /root/dofile/bashrc /root/.barhrc
+ln -sf /root/dofile/bashrc /root/.bashrc
 #shell
+sudo scl enable devtoolset-3 bash

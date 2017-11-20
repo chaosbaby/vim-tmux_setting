@@ -587,13 +587,13 @@ set laststatus=2
 let g:Powerline_symbols = 'fancy'
 syntax enable
 " colorscheme base16-monokai
-set background=light
+set background=dark
 set t_Co=256
 hi Normal ctermfg=grey
-" hi Normal ctermbg=black
+hi Normal ctermbg=black
 let g:solarized_termtrans = 1
 
 if &term =~ '256color'
   set t_ut=
 endif
-colorscheme molokai
+colorscheme base16-monokai

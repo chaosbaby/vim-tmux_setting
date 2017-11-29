@@ -140,6 +140,14 @@ if &term =~ '256color'
 endif
 " set term=screen
 
+" 去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限
+set nocompatible
+
+" indent: 如果用了:set indent,:set ai 等自动缩进，想用退格键将字段缩进的删掉，必须设置这个选项。否则不响应。
+" eol:如果插入模式下在行开头，想通过退格键合并两行，需要设置eol。
+" start：要想删除此次插入前的输入，需设置这个。
+set backspace=indent,eol,start
+
 "p keys{{{2
 let mapleader = ","
 " setfolder kay
@@ -581,7 +589,6 @@ syntax enable
 " jsx
 let g:jsx_ext_required = 0
 " }}}
-set nocompatible
 set encoding=utf-8
 set laststatus=2
 let g:Powerline_symbols = 'fancy'

@@ -1,0 +1,3 @@
+[submodule "gitDofile/gitignoreGit"]
+	path = gitDofile/gitignoreGit
+	url = https://github.com/github/gitignore.git

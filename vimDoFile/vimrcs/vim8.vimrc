@@ -188,6 +188,8 @@ nmap <Leader>WQ :wa<CR>:q<CR>
 nmap <Leader>Q :qa!<CR>
 
 inoremap jk <ESC> :w <ESC>
+inoremap JK <ESC> :w <ESC>
+inoremap Jk <ESC> :w <ESC>
 
 ""F12生成/更新tags文件
 "set tags=tags;
@@ -258,7 +260,7 @@ func! CompileRunGcc()
         exec "!g++ % -o /tmp/a.out"
         exec "!time /tmp/a.out"
     elseif &filetype == 'lua'
-        exec "!lua %"
+        exec "!lua5.1 %"
         exec "!time go run %"
     elseif &filetype == 'java'
         exec "!javac %"

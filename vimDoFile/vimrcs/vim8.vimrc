@@ -46,9 +46,13 @@ Bundle 'honza/vim-snippets'
 Bundle 'valloric/youcompleteme'
 
 Bundle 'tpope/vim-markdown'
-Plugin 'SirVer/ultisnips'
+Bundle 'SirVer/ultisnips'
 
 " Plugin 'ervandew/supertab'
+" }}} SYNTAX & COMPLETION "
+" FIND USAGE DEFINITION {{{ "
+Bundle 'brookhong/cscope.vim'
+" }}} FIND USAGE DEFINITION "
 " TYPESCRIPT {{{2
 Bundle 'pangloss/vim-javascript'
 " IDE TOOL {{{2
@@ -151,9 +155,9 @@ set backspace=indent,eol,start
 "p keys{{{2
 let mapleader = ","
 " setfolder kay
-map <Leader>fs <esc>:set foldmethod=syntax<CR>
-map <Leader>fi <esc>:set foldmethod=indent<CR>
-map <Leader>fm <esc>:set foldmethod=marker<CR>
+map <Leader>ffs <esc>:set foldmethod=syntax<CR>
+map <Leader>ffi <esc>:set foldmethod=indent<CR>
+map <Leader>ffm <esc>:set foldmethod=marker<CR>
 
 
 set pastetoggle=<F2>
@@ -338,7 +342,7 @@ set wildignore+=*/tmp,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 " let g:ctrlp_map = '<Leader>p'
 let g:ctrlp_cmd = 'CtrlP'
 "<Leader>f搜索MRU文件
-nmap <Leader>f :CtrlPMRUFiles<CR>
+nmap <Leader>p :CtrlPMRUFiles<CR>
 "<Leader>b显示ç¼冲区文件，并可通过序号进行跳转
 nmap <Leader>b :CtrlPBuffer<CR>
 "设置搜索时忽略的文件
@@ -566,6 +570,26 @@ nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " }}}
 
 "" }}}
+" FIND USAGE DEFINITION {{{ "
+nnoremap <leader>fa :call CscopeFindInteractive(expand('<cword>'))<CR>
+nnoremap <leader>l :call ToggleLocationList()<CR>
+" s: Find this C symbol
+nnoremap  <leader>fs :call CscopeFind('s', expand('<cword>'))<CR>
+" g: Find this definition
+nnoremap  <leader>fg :call CscopeFind('g', expand('<cword>'))<CR>
+" d: Find functions called by this function
+nnoremap  <leader>fd :call CscopeFind('d', expand('<cword>'))<CR>
+" c: Find functions calling this function
+nnoremap  <leader>fc :call CscopeFind('c', expand('<cword>'))<CR>
+" t: Find this text string
+nnoremap  <leader>ft :call CscopeFind('t', expand('<cword>'))<CR>
+" e: Find this egrep pattern
+nnoremap  <leader>fe :call CscopeFind('e', expand('<cword>'))<CR>
+" f: Find this file
+nnoremap  <leader>ff :call CscopeFind('f', expand('<cword>'))<CR>
+" i: Find files #including this file
+nnoremap  <leader>fi :call CscopeFind('i', expand('<cword>'))<CR>
+" }}} FIND USAGE DEFINITION "
 " }}}
 
 " TYPESCRIPT {{{2
@@ -605,4 +629,5 @@ let g:solarized_termtrans = 1
 if &term =~ '256color'
   set t_ut=
 endif
-colorscheme base16-monokai
+" colorscheme base16-monokai
+colorscheme molokai

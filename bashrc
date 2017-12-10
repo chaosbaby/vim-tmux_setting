@@ -15,7 +15,7 @@ fi
 
 export TERM=xterm-color
 
-export ULTIDIR = /.vim/bundle/vim-snippets/UltiSnips
+export ULTIDIR=/.vim/bundle/vim-snippets/UltiSnips
 
 BASE16_SHELL=$HOME/.config/base16-shell/
 [  -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"

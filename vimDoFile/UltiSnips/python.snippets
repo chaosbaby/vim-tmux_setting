@@ -1,3 +1,22 @@
-snippet myname "Description" b
-chaos
+snippet testClass "Description" b
+class test${1:Feature}(unittest.TestCase):
+    def setup(self):
+        pass
+
+    def teardown(self):
+        pass
+
+    def test_${2:action_feature}(self):
+        # arrage
+        # act
+        # assert
+        self.assertEqual(1, 2)
+endsnippet
+
+snippet testFunc "Description" b
+    def test_${2:action_feature}(self):
+        # arrage
+        # act
+        # assert
+        self.assertEqual(1, 2)
 endsnippet

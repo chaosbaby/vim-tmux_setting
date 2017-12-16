@@ -1,3 +1,47 @@
 snippet luamark "Description" b
 i am lua
 endsnippet
+
+snippet testSuit "Description" b
+_G.EXPORT_ASSERT_TO_GLOBALS = true
+
+
+local lu = LuaUnit.new()
+lu:setOutputType('tap')
+lu:runSuite()
+endsnippet
+
+snippet packagepath "Description" b
+package.path = package.path..';${1:dir}/?.lua'
+endsnippet
+
+
+snippet testFeature "Description" b
+_G.${1:testClassFeature} = {} --class
+    function $1:setUp()
+        -- set up tests
+        self.args = 1
+        print( '$1:setUp' )
+    end
+
+    function $1:tearDown()
+        -- some tearDown() code if necessary
+        print( '$1:tearDown' )
+    end
+
+    function $1:testTemplate()
+        -- arrange
+        -- act
+        -- assert
+        assertEquals( self.args, 2 )
+    end
+endsnippet
+
+snippet testActionFeature "Description" b
+function ${1:testClassFeature}:${2:testFunctionFeature}()
+	-- arrange
+	-- act
+	-- assert
+	assertEquals( 2, 1 )
+end
+endsnippet

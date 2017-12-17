@@ -10,6 +10,7 @@ sudo yum install gcc-c++ -y
 
 sudo yum install -y ruby ruby-devel lua lua-devel luajit \
 luajit-devel ctags git python python-devel \
+python27-python-devel \
 python34 python34-devel tcl-devel \
 perl perl-devel perl-ExtUtils-ParseXS \
 perl-ExtUtils-XSpp perl-ExtUtils-CBuilder \
@@ -26,7 +27,7 @@ wget https://github.com/vim/vim/archive/master.zip
 unzip master.zip
 cd vim-master
 cd src/
-./configure --with-features=huge -enable-pythoninterp --with-python-config-dir=/usr/lib/python2.7/config
+./configure --with-features=huge -enable-pythoninterp --with-python-config-dir=/usr/lib64/python2.7/config
 sudo make
 sudo make install
 export PATH=/usr/local/bin:$PATH

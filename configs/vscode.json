@@ -1,0 +1,70 @@
+{
+    "vim.leader": ",",
+    "workbench.iconTheme": "vscode-icons",
+    "vim.easymotion": true,
+    "vim.insertModeKeyBindings": [
+        {
+            "before": ["j", "j"],
+            "after": ["<Esc>"] ,
+                "commands": [
+            {
+                "command": "workbench.action.files.save",
+                "args": []
+            },
+            ]
+        },
+        {
+            "before": ["j", "k"],
+            "after": ["<Esc>"] ,
+                "commands": [
+            {
+                "command": "workbench.action.files.save",
+                "args": []
+            },
+            ]
+        }
+
+    ],
+    "vim.history": 250,
+    "vim.textwidth": 120,
+    "extensions.autoUpdate": true,
+    "files.associations": {
+        "*.txt": "lua"
+    },
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/*.meta": true,
+        "**/*.asset": true,
+        "**/*.prefab": true,
+        "**/*.dll": true,
+        "**/*.shader": true,
+        "**/*.png": true,
+        "**/*.mat": true,
+        "**/*.a": true,
+        "**/*.FBX": true,
+        "**/*.so": true,
+        "**/*.unitypackage": true,
+        "**/*.pdf": true,
+        "**/*.unity": true,
+        "**/*.fbx": true,
+        "**/*.db": true,
+        "**/*.anim": true,
+        "**/*.dds": true,
+        "**/*.tga": true
+    },
+    "gitlens.advanced.messages": {
+        "suppressCommitHasNoPreviousCommitWarning": false,
+        "suppressCommitNotFoundWarning": false,
+        "suppressFileNotUnderSourceControlWarning": false,
+        "suppressGitVersionWarning": false,
+        "suppressLineUncommittedWarning": false,
+        "suppressNoRepositoryWarning": true,
+        "suppressUpdateNotice": false,
+        "suppressWelcomeNotice": false
+    },
+    "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\bash.exe"
+}
